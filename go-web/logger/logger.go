@@ -17,7 +17,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// InitLogger 初始化Logger
+// Init InitLogger 初始化Logger
 func Init() (err error) {
 	writeSyncer := getLogWriter(viper.GetString("log.filename"),
 		viper.GetInt("log.max_size"),
@@ -101,7 +101,7 @@ func GinRecovery(stack bool) gin.HandlerFunc {
 						zap.String("request", string(httpRequest)),
 					)
 					// If the connection is dead, we can't write a status to it.
-					c.Error(err.(error)) // nolint: errcheck
+					_ = c.Error(err.(error)) // nolint: err check
 					c.Abort()
 					return
 				}

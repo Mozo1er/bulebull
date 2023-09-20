@@ -1,7 +1,7 @@
 app:
   name: "web_app"
   mode: "dev"
-  port:
+  port: 8081
 log:
   level: "debug"
   filename: "web_app.log"
@@ -9,16 +9,16 @@ log:
   max_age: 30
   max_backups: 7
 mysql:
-  host: ""
-  port:
-  user: ""
-  password: ""
-  dbname: ""
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "123456"
+  dbname: "bluebull"
   max_open_connections: 200
   max_idle_connections: 100
 redis:
-  host: ""
-  port:
+  host: "127.0.0.1"
+  port: 6379
   password: ""
   db: 0
   pool_size: 100

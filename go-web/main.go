@@ -1,9 +1,11 @@
 package main
 
 import (
+	"Web_App/controller"
 	"Web_App/dao/mysql"
 	"Web_App/dao/redis"
 	"Web_App/logger"
+	"Web_App/pkg/snowflake"
 	"Web_App/routes"
 	"Web_App/settings"
 	"context"
@@ -48,8 +50,17 @@ func main() {
 		return
 	}
 	defer redis.Close()
+	if err := snowflake.Init(1); err != nil {
+		fmt.Printf("snowflake.Init() failed,err:%v\n", err)
+		return
+	}
 	//5.注册路由
 	r := routes.SetUp()
+	// 初始化Gin框架翻译校验器
+	if err := controller.InitTrans("zh"); err != nil {
+		fmt.Printf("controller.InitTrans.Init() failed,err:%v\n", err)
+		return
+	}
 	//6.启动服务（优雅关机）
 	srv := &http.Server{
 		Addr: fmt.Sprintf(":%d",
